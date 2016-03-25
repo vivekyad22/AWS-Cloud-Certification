@@ -1,0 +1,20 @@
+### CLOUD FORMATION SCRIPT
+
+A template is a JavaScript Object Notation (JSON) text file that contains the configuration information
+about the AWS resources you want to create in the stack. In this particular sample template, it includes
+six top-level sections: AWSTemplateFormatVersion, Description, Parameters, Mappings, Resources,
+and Outputs; however, only the Resources section is required.
+
+
+Let's take a look at a very basic template. The following template declares a single resource of type
+AWS::S3::Bucket: with the name HelloBucket.
+
+
+{
+ "Resources" : {
+ "HelloBucket" : {
+ "Type" : "AWS::S3::Bucket"
+ }
+ }
+}
+
