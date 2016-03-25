@@ -18,3 +18,31 @@ AWS::S3::Bucket: with the name HelloBucket.
  }
 }
 
+SETUP VPC WITH PRIVATE / PUBLIC SUBNET , NAT INSTANCE , ROUTING TABLES
+---------------------------------------------------------------------------------------------------------
+
+1. create VPC with two subnets , Public & Private Subnets . 
+2. public subnet with EIP & IGW & Route 
+3. Create NAT & assign EIP & Add route in Private subnet
+4. Discover security groups wherever required.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
