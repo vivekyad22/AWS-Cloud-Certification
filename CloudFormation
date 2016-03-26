@@ -1,5 +1,15 @@
 ### CLOUD FORMATION SCRIPT
 
+http://awsdocs.s3.amazonaws.com/AWSCloudFormation/latest/cfn-ug.pdf
+https://s3.amazonaws.com/cloudformation-templates-us-east-1/WordPress_Single_Instance_With_RDS.template
+https://github.com/markitx/cloud-formation-templates/blob/master/vpc.template
+https://s3.amazonaws.com/cloudformation-templates-us-east-1/vpc_multiple_subnets.template
+http://awsdocs.s3.amazonaws.com/VPC/latest/vpc-ug.pdf
+
+
+
+
+
 A template is a JavaScript Object Notation (JSON) text file that contains the configuration information
 about the AWS resources you want to create in the stack. In this particular sample template, it includes
 six top-level sections: AWSTemplateFormatVersion, Description, Parameters, Mappings, Resources,
@@ -31,9 +41,91 @@ FOR singapore region
 
 
 
+{
+  "AWSTemplateFormatVersion" : "2016-03-26",
+  "Description" : "VPC with Private and Public Subnet with a NAT for Private",
+  "Resources" : {
+    "cfVPC" : {
+       "Type" : "AWS::EC2::VPC",
+       "Properties" : { 
+       "CidrBlock" : "10.0.0.0/16",
+       "EnableDnsSupport" : "true",
+       "EnableDnsHostnames" : "true", 
+       "InstanceTenancy" : "default",
+       "Tags" : [ {"Key" : "Tagname", "Value" : "TagDetails"} ]
+  }
+},
+   
+     "cfPublicSubnet" : {
+ "Type" : "AWS::EC2::Subnet",
+ "Properties" : {
+ "VpcId" : { "Ref" : "cfVPC" },
+ "CidrBlock" : "10.0.1.0/24",
+ "Tags" : [ { "Key" : "SubnetNetwork", "Value" : "Public" } ]
+    }
+ },
 
 
+    "cfInternetGateway" : {
+ "Type" : "AWS::EC2::InternetGateway",
+ "Properties" : {
+ "Tags" : [ {"Key" : "cfIgwName", "Value" : "cfIgwVPC"}]
+    }
+ },
+ 
+     "cfAttachGateway" : {
+       "Type" : "AWS::EC2::VPCGatewayAttachment",
+       "Properties" : {
+         "VpcId" : { "Ref" : "cfVPC" },
+         "InternetGatewayId" : { "Ref" : "cfInternetGateway" }
+       }
+    },
 
+     "cfPublicRouteTable" : {
+      "Type" : "AWS::EC2::RouteTable",
+      "Properties" : {
+        "VpcId" : {"Ref" : "cfVPC"},
+        "Tags" : [ {"Key" : "cfRouteTable", "Value" : "cfRouteTableVPC" } ]
+      }
+    },
+ 
+     "cfPublicRoute" : {
+      "Type" : "AWS::EC2::Route",
+      "DependsOn" : "cfAttachGateway",
+      "Properties" : {
+        "RouteTableId" : { "Ref" : "cfPublicRouteTable" },
+        "DestinationCidrBlock" : "0.0.0.0/0",
+        "GatewayId" : { "Ref" : "cfInternetGateway" }
+      }
+    },
+ 
+     "cfPublicSubnetRouteTableAssociation" : {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "SubnetId" : { "Ref" : "cfPublicSubnet" },
+        "RouteTableId" : { "Ref" : "cfPublicRouteTable" }
+      }
+    },
+
+
+     "cfPrivateSubnet" : {
+ "Type" : "AWS::EC2::Subnet",
+ "Properties" : {
+ "VpcId" : { "Ref" : "cfVPC" },
+ "CidrBlock" : "10.0.2.0/24",
+ "Tags" : [ { "Key" : "SubnetNetwork", "Value" : "Private" } ]
+    }
+ },
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 
 
 
