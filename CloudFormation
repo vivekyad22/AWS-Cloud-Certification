@@ -117,7 +117,21 @@ FOR singapore region
     }
  },
  
- 
+     "cfPrivateRouteTable" : {
+      "Type" : "AWS::EC2::RouteTable",
+      "Properties" : {
+        "VpcId" : {"Ref" : "cfVPC"},
+        "Tags" : [ {"Key" : "SubnetNetwork", "Value" : "Private" } ]
+      }
+    },
+
+    "cfPrivateSubnetRouteTableAssociation" : {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "SubnetId" : { "Ref" : "cfPrivateSubnet" },
+        "RouteTableId" : { "Ref" : "cfPrivateRouteTable" }
+      }
+    },
  
  
  
