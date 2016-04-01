@@ -38,8 +38,11 @@ FOR singapore region
 4. Discover security groups wherever required.
 
 
-
-
+"Parameters" : {
+    "KeyName": {
+      "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instances",
+      "Type": "String",
+    },
 
 {
   "AWSTemplateFormatVersion" : "2016-03-26",
@@ -152,7 +155,6 @@ FOR singapore region
         "SubnetId" : { "Ref" : "cfPublicSubnet" },
         "SourceDestCheck" : "false",
         "ImageId" : { "Fn::FindInMap" : [ "AWSNATAMI", { "Ref" : "AWS::Region" }, "AMI" ]},
-        "SecurityGroupIds" : [{ "Ref" : "NATSecurityGroup" }],
         "Tags" : [ {"Key" : "Name", "Value" : "NAT Device"} ]
       }
     },
