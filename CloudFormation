@@ -125,48 +125,50 @@ FOR singapore region
       }
     },
 
+
+     "cfPrivateRoute" : {
+      "Type" : "AWS::EC2::Route",
+      "Properties" : {
+        "RouteTableId" : { "Ref" : "cfPrivateRouteTable" },
+        "DestinationCidrBlock" : "0.0.0.0/0",
+        "InstanceId" : { "Ref" : "cfNATDevice" }
+      }
+    },
+
+
     "cfPrivateSubnetRouteTableAssociation" : {
       "Type" : "AWS::EC2::SubnetRouteTableAssociation",
       "Properties" : {
         "SubnetId" : { "Ref" : "cfPrivateSubnet" },
-        "RouteTableId" : { "Ref" : "cfPrivateRouteTable" }
-      }
+       }
     },
  
  
- 
-     "PrivateRoute1" : {
-      "Type" : "AWS::EC2::Route",
-      "Properties" : {
-        "RouteTableId" : { "Ref" : "PrivateRouteTable1" },
-        "DestinationCidrBlock" : "0.0.0.0/0",
-        "InstanceId" : { "Ref" : "NATDevice1" }
-      }
-    },
-
-    "NATIPAddress1" : {
-      "Type" : "AWS::EC2::EIP",
-      "DependsOn" : "GatewayToInternet",
-      "Properties" : {
-        "Domain" : "vpc",
-        "InstanceId" : { "Ref" : "NATDevice1" }
-      }
-    },
-
-
-
-    "NATDevice1" : {
+    "cfNATDevice" : {
       "Type" : "AWS::EC2::Instance",
       "Properties" : {
         "InstanceType" : "t1.micro",
         "KeyName" : { "Ref" : "KeyName" },
-        "SubnetId" : { "Ref" : "PublicSubnet1" },
+        "SubnetId" : { "Ref" : "cfPublicSubnet" },
         "SourceDestCheck" : "false",
         "ImageId" : { "Fn::FindInMap" : [ "AWSNATAMI", { "Ref" : "AWS::Region" }, "AMI" ]},
         "SecurityGroupIds" : [{ "Ref" : "NATSecurityGroup" }],
         "Tags" : [ {"Key" : "Name", "Value" : "NAT Device"} ]
       }
     },
+ 
+ 
+    "cfNATIPAddress" : {
+      "Type" : "AWS::EC2::EIP",
+      "DependsOn" : "cfGatewayToInternet",
+      "Properties" : {
+        "Domain" : "vpc",
+        "InstanceId" : { "Ref" : "cfNATDevice" }
+      }
+    },
+
+
+
     
     
     
