@@ -38,15 +38,26 @@ FOR singapore region
 4. Discover security groups wherever required.
 
 
-"Parameters" : {
-    "KeyName": {
-      "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instances",
-      "Type": "String",
-    },
+
 
 {
   "AWSTemplateFormatVersion" : "2016-03-26",
   "Description" : "VPC with Private and Public Subnet with a NAT for Private",
+
+"Parameters" : {
+    "KeyName": {
+      "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instances",
+      "Type": "String",
+     }
+    },
+
+
+  "Mappings" : {
+    "cfAWSNATAMI" : {
+      "us-east-1"      : { "AMI" : "ami-c6699baf" }
+      }
+},
+
   "Resources" : {
     "cfVPC" : {
        "Type" : "AWS::EC2::VPC",
@@ -154,7 +165,7 @@ FOR singapore region
         "KeyName" : { "Ref" : "KeyName" },
         "SubnetId" : { "Ref" : "cfPublicSubnet" },
         "SourceDestCheck" : "false",
-        "ImageId" : { "Fn::FindInMap" : [ "AWSNATAMI", { "Ref" : "AWS::Region" }, "AMI" ]},
+        "ImageId" : { "Fn::FindInMap" : [ "cfAWSNATAMI", { "Ref" : "AWS::Region" }, "cfAMI" ]},
         "Tags" : [ {"Key" : "Name", "Value" : "NAT Device"} ]
       }
     },
@@ -168,7 +179,7 @@ FOR singapore region
         "InstanceId" : { "Ref" : "cfNATDevice" }
       }
     },
-
+}
 
 
     
