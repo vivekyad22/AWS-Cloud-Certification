@@ -4,5 +4,7 @@ Create autoscaling group  , add EC2 instances with user script / bootstrapping .
 & Add ELB to it . 
 
 
+Autoscaling in different regions 
+
 
 
