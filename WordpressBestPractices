@@ -1,0 +1,18 @@
+
+
+https://d0.awsstatic.com/whitepapers/wordpress-best-practices-on-aws.pdf
+
+If an
+instance fails, you can launch a replacement Amazon EC2 instance and attach the
+Amazon EBS volume to it. This can even be fully automated with the use of Auto Scaling
+(to replace the instance) and an initialization script (to attach the Amazon EBS volume to
+the new instance).
+
+Keep static contents on S3 & deliver them via cloudfront while dynamic on EC2   . 
+
+
+
+
+
+
+
