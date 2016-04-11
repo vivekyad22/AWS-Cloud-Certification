@@ -4,4 +4,8 @@ https://www.youtube.com/watch?v=wG8OmV5VFcA
 Use load balancer  at front 
 Can also use Multi AZ with read replicas 
 
+Read replicas can also be created cross regions
+
+
+
 
