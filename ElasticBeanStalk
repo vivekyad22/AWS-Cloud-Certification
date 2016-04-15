@@ -1,0 +1,65 @@
+Deploy code without interacting much with infra.. Used by developers ,,GIT is the primary source of deployment . 
+
+$ cd /home/vivek
+$ git clone  $GIT_URL
+$ cd GIT_REPO
+$ eb init
+
+This asks your for --
+
+REGION
+APP_NAME
+ENVIRONMENT
+AMI_WITH_RUBY_PHP_TOMCAT_PYTHON
+ENV-TYPE_ELB_OR_SINGLE
+
+
+
+$ eb start 
+
+In configuration part we can change apache DOcroot , PHP.ini settings .. 
+Configure AutoScaling
+
+$ eb push
+
+You can create .ebextension with YAML config 
+
+$ eb logs
+$  eb deploy
+
+
+
+
+OPSWORK
+-----------------------------------------------------------------------------------------------------------------------
+
+Add STack
+
+Add layer 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
